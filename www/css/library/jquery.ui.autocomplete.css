@@ -1,0 +1,46 @@
+/*!
+ * jQuery UI Autocomplete 1.9.2
+ * http://jqueryui.com
+ *
+ * Copyright 2012 jQuery Foundation and other contributors
+ * Released under the MIT license.
+ * http://jquery.org/license
+ *
+ * http://docs.jquery.com/UI/Autocomplete#theming
+ */
+.ui-autocomplete {
+	position: absolute;
+	top: 0;
+	left: 0;
+	cursor: default;
+	transition: none;
+}
+.ui-autocomplete * {transition: none; cursor: pointer;}
+/* workarounds */
+* html .ui-autocomplete { width:1px; } /* without this, the menu expands to 100% in IE6 */
+
+
+.ui-menu .ui-menu-item {
+    clear: both;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.ui-menu .ui-menu-item img {
+    border: 1px solid #AAAAAA;
+    border-radius: 4px;
+    margin: 2px 4px -4px 0;
+}
+
+
+.ui-menu .ui-menu-item h3 {
+    display: block;
+    font-size: 12px;
+    font-weight: normal;
+    margin: -24px 0 0 42px;
+}
+
+.ui-menu .ui-menu-item a {
+    height: 42px;
+}

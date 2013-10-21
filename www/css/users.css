@@ -1,0 +1,9 @@
+.content h2 .header-link{
+	color: #FFFFFF;
+    font-size: 15px;
+    text-decoration: none;
+}
+
+.content h2 .header-link:hover{
+	color: black;
+}
