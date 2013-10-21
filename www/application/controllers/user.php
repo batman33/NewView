@@ -140,7 +140,7 @@ class User extends CI_Controller {
 
 	public function message()
 	{
-		$header['title'] = 'Сообщения пользователя';
+		$header['title'] = 'Входящие сообщения пользователя';
 
 		$this->load->model('messages');
 
@@ -150,6 +150,20 @@ class User extends CI_Controller {
 		$this->load->view('user/block/left');
 		$this->load->view('user/u_message',$data);
 		$this->load->view('user/block/bottom');
+	}
+
+	public function sendMessage()
+	{
+		$header['title'] = 'Исходящие сообщения пользователя';
+
+		$this->load->model('messages');
+
+		$data['inbox'] = $this->messages->getAllSentMessage($this->session->userdata('user_id'));
+
+		$this->load->view('user/block/top', $header);
+		$this->load->view('user/block/left');
+		$this->load->view('user/u_sent_message',$data);
+		$this->load->view('user/block/bottom');	
 	}
 
 	public function newMessage()
@@ -209,12 +223,10 @@ class User extends CI_Controller {
 
         	$this->load->model('messages');
 
-        	$this->messages->newMessage($data_db);
+        	$result = $this->messages->newMessage($data_db);
 
-        	//echo "<pre>";
-        	//print_r($data_db);
-        	//echo "</pre>";
-
+			if($result == true)
+                redirect('/user/message/succ', 'refresh'); 
         }		
 
 		$this->load->view('user/block/top', $header);

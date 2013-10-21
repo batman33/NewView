@@ -12,23 +12,23 @@ $(document).ready(function(){
 
 </script>
 <div class="content full">
-	<h2>Входящие сообщения <?php echo anchor('/user/sendMessage', 'Исходящие сообщения', 'class="header-link"'); ?> <?php echo anchor('/user/newMessage', 'Написать сообщение', 'class="header-link"'); ?></h2>
+	<h2>Исходящие сообщения <?php echo anchor('/user/message', 'Входящие сообщения', 'class="header-link"'); ?> <?php echo anchor('/user/newMessage', 'Написать сообщение', 'class="header-link"'); ?></h2>
 
 	<?php if($inbox) : ?>
 	<table class="tablesorter message-list" id="message-list">
 		<thead>
 			<tr>
 				<th>Тема пиисьма</th>
-				<th>Автор письма</th>
+				<th>Получатель</th>
 				<th>Дата отправки</th>
 			</tr>
 		</thead> 
 		<tbody> 
 			<?php 
 				foreach ($inbox as $key) {
-					echo $key->mess_status == true ? '<tr class="new">' : '<tr>';
-					echo	'<td>'. anchor('user/viewMessage/' . $key->mess_id, $key->mess_title) .'</a></td>' .
-							'<td>'. $key->u_name . '</td>' .
+					echo '<tr>' .
+							'<td>'. anchor('user/viewMessage/' . $key->mess_id, $key->mess_title) .'</a></td>' .
+							'<td>'. $key->u_name .'</td>' .
 							'<td>'. mdate("%d.%m.%Y г. %h:%i",$key->mess_created) .'</td>' .
 						 '</tr>';
 				}

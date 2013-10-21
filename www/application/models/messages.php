@@ -32,6 +32,22 @@ class Messages extends CI_Model {
         return $query->result();		
 	}
 
+	public function getAllSentMessage($id)
+	{
+		$this->db->select('
+			messages.id as mess_id,
+			messages.title as mess_title,
+			messages.status as mess_status,
+			messages.created as mess_created,
+			users.name as u_name,
+			users.id as u_id');
+		
+		$this->db->where('from', $id);
+		$this->db->join('users', 'users.id = messages.to', 'left');
+
+        $query = $this->db->get($this->table);
+        return $query->result();		
+	}
 }
 
 /* End of file messages.php */
