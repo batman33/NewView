@@ -19,7 +19,6 @@ class User extends CI_Controller {
         //Проверка на авторизованность
         if(!$this->session->userdata('username'))
                 redirect('/home', 'refresh');
-
         $this->load->model('messages');
         $this->countMessage = $this->messages->countByUser($this->session->userdata('user_id'));
 	}
@@ -33,6 +32,7 @@ class User extends CI_Controller {
 		$data['profile'] = $this->users->getUserCountryRegion($this->session->userdata('user_id'));
 
 		$header['title'] = 'Профиль пользователя - ' . $data['profile']->name;
+
 		$header['countMessage'] = $this->countMessage;
 
 		$login = array (
@@ -198,6 +198,7 @@ class User extends CI_Controller {
 		$header['title'] = 'Новое сообщение';
 		$header['countMessage'] = $this->countMessage;
 
+
 		$title = array(
             'name'   	=> 'title',    // Имя поля
 			'id'       	=> 'title',    // ID поля
@@ -267,6 +268,7 @@ class User extends CI_Controller {
 	{
 		$header['title'] = 'Сообщения пользователя';
 		$header['countMessage'] = $this->countMessage;
+
 
         // Конфиг для загрузки фото
         $config['upload_path'] = './' . $this->fullUploadPath;

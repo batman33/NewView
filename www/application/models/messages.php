@@ -51,6 +51,7 @@ class Messages extends CI_Model {
         return $query->result();		
 	}
 
+
 	public function getMessageById($id)
 	{
         if($id){
@@ -89,6 +90,7 @@ class Messages extends CI_Model {
 		$query = $this->db->get();
 		return $query->num_rows();
 	}
+
 }
 
 /* End of file messages.php */
