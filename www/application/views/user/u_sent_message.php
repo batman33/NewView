@@ -28,7 +28,7 @@ $(document).ready(function(){
 				foreach ($inbox as $key) {
 					echo '<tr>' .
 							'<td>'. anchor('user/viewMessage/' . $key->mess_id . '/sent', $key->mess_title) .'</a></td>' .
-							'<td>'. anchor('/user/viewUser/' . $key->u_id, $key->u_name) .'</td>' .
+							'<td>'. anchor_user($key->u_id, $key->u_name, true) .'</td>' .
 							'<td>'. mdate("%d.%m.%Y г. %H:%i",$key->mess_created) .'</td>' .
 						 '</tr>';
 				}

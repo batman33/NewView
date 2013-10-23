@@ -60,6 +60,8 @@ class Messages extends CI_Model {
 				messages.message as messages,
 				messages.status as mess_status,
 				messages.created as mess_created,
+				messages.to as mess_to,
+				messages.from as mess_from,				
 				users.name as u_name,
 				users.id as u_id');
 

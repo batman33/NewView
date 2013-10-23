@@ -190,6 +190,10 @@ class User extends CI_Controller {
 		$data['message'] = $this->messages->getMessageById($id, $status);
 		$data['statuses'] = $status;
 
+		// Защита от просмотра чужик сообщений
+		if($data['message']->mess_to != $this->session->userdata('user_id') && $data['message']->mess_from != $this->session->userdata('user_id'))
+			redirect('user/message', 'refresh'); 
+
 		$this->load->view('user/block/top', $header);
 		$this->load->view('user/block/left');
 		$this->load->view('user/u_view_message',$data);

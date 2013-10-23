@@ -28,7 +28,7 @@ $(document).ready(function(){
 				foreach ($inbox as $key) {
 					echo $key->mess_status == true ? '<tr class="new">' : '<tr>';
 					echo	'<td>'. anchor('user/viewMessage/' . $key->mess_id . '/inbox', $key->mess_status == true ? $key->mess_title . ' (new)' : $key->mess_title) . '</a></td>' .
-							'<td>'. anchor('/user/viewUser/' . $key->u_id, $key->u_name) . '</td>' .
+							'<td>'. anchor_user($key->u_id, $key->u_name, true) .'</td>' .
 							'<td>'. mdate("%d.%m.%Y г. %H:%i",$key->mess_created) .'</td>' .
 						 '</tr>';
 				}
