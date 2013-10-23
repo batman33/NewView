@@ -52,7 +52,7 @@ class Messages extends CI_Model {
 	}
 
 
-	public function getMessageById($id)
+	public function getMessageById($id, $status)
 	{
         if($id){
 
@@ -66,7 +66,12 @@ class Messages extends CI_Model {
 				users.id as u_id');
 
             $this->db->where('messages.id', $id);
-			$this->db->join('users', 'users.id = messages.from', 'left');            
+
+            if($status == 'inbox')
+				$this->db->join('users', 'users.id = messages.from', 'left');     
+			else
+				$this->db->join('users', 'users.id = messages.to', 'left'); 
+
             $this->db->from($this->table);       
             $query = $this->db->get();
             $result = $query->result();

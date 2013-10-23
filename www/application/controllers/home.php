@@ -27,6 +27,8 @@ class Home extends CI_Controller {
 		$message_type = $this->uri->segment(2);
 		if($message_type == 'successReg'){
 			$data['message'] = '<div class="success">Регистрация успешна!</div>';
+		} elseif($message_type == 'no-permision'){
+			$data['message'] = '<div class="error">Зарегестрируйтесь для просмотра!</div>';
 		}
 
 

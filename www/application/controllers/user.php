@@ -18,7 +18,7 @@ class User extends CI_Controller {
         parent::__construct();
         //Проверка на авторизованность
         if(!$this->session->userdata('username'))
-                redirect('/home', 'refresh');
+                redirect('/home/no-permision', 'refresh');
         $this->load->model('messages');
         $this->countMessage = $this->messages->countByUser($this->session->userdata('user_id'));
 	}
@@ -177,6 +177,7 @@ class User extends CI_Controller {
 	public function viewMessage()
 	{
 		$id = $this->uri->segment(3);
+		$status = $this->uri->segment(4);
 
 		$header['title'] = 'Cообщения';
 		$header['countMessage'] = $this->countMessage;
@@ -185,7 +186,8 @@ class User extends CI_Controller {
 	
 		$this->messages->deActive($id, array('status' => 0));
 
-		$data['message'] = $this->messages->getMessageById($id);
+		$data['message'] = $this->messages->getMessageById($id, $status);
+		$data['statuses'] = $status;
 
 		$this->load->view('user/block/top', $header);
 		$this->load->view('user/block/left');
@@ -379,6 +381,23 @@ class User extends CI_Controller {
 		$this->load->view('user/u_avatar',$data);
 		$this->load->view('user/block/bottom');
 	}	
+
+	public function viewUser()
+	{
+		$id = $this->uri->segment(3);
+		$header['countMessage'] = $this->countMessage;
+
+		$header['title'] = 'Профиль пользователя';
+
+		$this->load->model('users');
+
+		$data['profile'] = $this->users->getUserCountryRegion($id);
+
+		$this->load->view('user/block/top', $header);
+		$this->load->view('user/block/left');
+		$this->load->view('user/u_view_profile',$data);
+		$this->load->view('user/block/bottom');
+	}
 
 }
 

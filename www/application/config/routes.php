@@ -52,7 +52,7 @@ $route['category/:num/pagination/page'] 	 = "home/categoryView";
 $route['category/:num/pagination/page/:any'] = "home/categoryView";
 $route['AJAXRequest'] 						 = "home/AJAXRequest";
 
-$route['admin/editNews/:any'] 				 = "admin/newNews";
+$route['admin/editNews/:any/:any'] 			 = "admin/newNews";
 $route['admin'] 							 = "home/admin";
 
 $route['user/message/succ']					 = "user/message";

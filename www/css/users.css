@@ -7,3 +7,24 @@
 .content h2 .header-link:hover{
 	color: black;
 }
+
+.user-profile{
+	overflow: hidden;
+}
+.user-profile .avatar {
+    float: left;
+    height: 150px;
+    margin: 10px;
+    width: 150px;
+}
+.user-profile .avatar img{
+    border: 1px solid #CCCCCC;
+    border-radius: 75px;
+}
+.user-profile .info-user {
+    margin: 13px 10px 0 190px;
+}
+.user-profile .info-user div{
+	margin: 5px;
+	font-size: 14px; 
+}

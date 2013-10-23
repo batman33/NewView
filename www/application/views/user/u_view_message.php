@@ -6,8 +6,8 @@
 			<h3 class="title message"><?=$message->mess_title?> <?=anchor('/user/deleteMessage/' . $message->mess_id, 'Удалить сообщение');?></h3>
 		</div>
 		<div>
-			<span>Отправлено: <?=mdate("%d.%m.%Y г. %h:%i",$message->mess_created)?></span>
-			<span>От: <?=anchor('/user/viewUser/' . $message->u_id, $message->u_name);?></span>
+			<span>Отправлено: <?=mdate("%d.%m.%Y г. %H:%i",$message->mess_created)?></span>
+			<span><?=$statuses == 'inbox' ? 'От: ' : 'Получатель: '?><?=anchor('/user/viewUser/' . $message->u_id, $message->u_name);?></span>
 		</div>
 
 		<p><?=$message->messages?></p>

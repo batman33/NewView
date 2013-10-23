@@ -52,8 +52,8 @@
 						foreach ($comment as $key) {
 							echo '<li>' .
 									'<img align="left" src="' . base_url() . $key->users_ava . '" />' .
-									'<div class="user">' . $key->user_name . '</div>' .
-									'<div class="date">' . mdate("%d.%m.%Y г. %h:%i",$key->date) . '</div>' .
+									'<div class="user">' . anchor('/user/viewUser/' . $key->user_id, $key->user_name) . '</div>' .
+									'<div class="date">' . mdate("%d.%m.%Y г. %H:%i",$key->date) . '</div>' .
 									'<div class="text">' . parse_smileys($key->text, base_url() . 'images/smileys/') . '</div>' .
 								 '</li>';
 
