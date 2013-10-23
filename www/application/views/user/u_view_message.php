@@ -7,7 +7,7 @@
 		</div>
 		<div>
 			<span>Отправлено: <?=mdate("%d.%m.%Y г. %H:%i",$message->mess_created)?></span>
-			<span><?=$statuses == 'inbox' ? 'От: ' : 'Получатель: '?><?=anchor('/user/viewUser/' . $message->u_id, $message->u_name);?></span>
+			<span><?=$statuses == 'inbox' ? 'От: ' : 'Получатель: '?><?=anchor('/user/viewUser/' . $message->u_id, $message->u_name);?> <?=anchor('/user/newMessage/' . $message->u_id, 'Ответить');?></span>
 		</div>
 
 		<p><?=$message->messages?></p>

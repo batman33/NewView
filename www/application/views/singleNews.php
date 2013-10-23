@@ -51,8 +51,10 @@
 					<?php
 						foreach ($comment as $key) {
 							echo '<li>' .
-									'<img align="left" src="' . base_url() . $key->users_ava . '" />' .
-									'<div class="user">' . anchor('/user/viewUser/' . $key->user_id, $key->user_name) . '</div>' .
+									'<img align="left" src="' . base_url() . $key->users_ava . '" />';
+							echo	'<div class="user">';
+							echo    	$this->session->userdata('user_id') ? anchor('/user/viewUser/' . $key->user_id, $key->user_name) . anchor('/user/newMessage/' . $key->user_id, ' ', 'class="sent-message"') : $key->user_name;
+							echo    '</div>' .
 									'<div class="date">' . mdate("%d.%m.%Y г. %H:%i",$key->date) . '</div>' .
 									'<div class="text">' . parse_smileys($key->text, base_url() . 'images/smileys/') . '</div>' .
 								 '</li>';

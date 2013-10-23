@@ -41,6 +41,6 @@
     margin: -24px 0 0 42px;
 }
 
-.ui-menu .ui-menu-item a {
+.ui-menu .ui-menu-item a.heighter {
     height: 42px;
 }

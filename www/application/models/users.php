@@ -133,6 +133,7 @@ class Users extends CI_Model
     {
     	$this->db->select('login, id, avatar_thums, name')
     			 ->like('login', $val)
+    			 ->or_like('name', $val)
     			 ->limit(10);
 		$query = $this->db->get($this->table);
 

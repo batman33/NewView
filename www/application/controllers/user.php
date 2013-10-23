@@ -11,6 +11,7 @@ class User extends CI_Controller {
     // Путь до маленьких изображений пользователя
     private $thumbsUploadPath = "files/avatar/thumbs/";
 
+    // Количество сообщение у пользователя
     private $countMessage = 0;
 
 	public function User()
@@ -201,29 +202,49 @@ class User extends CI_Controller {
 		$header['countMessage'] = $this->countMessage;
 
 
+		$title_data 	= $this->input->post('title');
+		$message_data 	= $this->input->post('message');
+		$to_data 		= $this->input->post('to');
+		$user_to_data 	= $this->input->post('user_to');
+
+
+		if($this->uri->segment(3)){
+
+			$id = $this->uri->segment(3);
+
+			$this->load->model('users');
+
+			$user_data 	  = $this->users->getByID($id);
+
+			$user_to_data = $user_data->id;
+			$to_data 	  = $user_data->name;				
+		}
+
+
+
 		$title = array(
             'name'   	=> 'title',    // Имя поля
 			'id'       	=> 'title',    // ID поля
 			'maxlength'	=> '50',     // Максимальное кол-во знаков
 			'size'     	=> '40',      // Размер
-			'value'		=>	$this->input->post('title'),
+			'value'		=>	$title_data,
 			);
 		$message = array(
             'name'   	=> 'message',    // Имя поля
 			'id'       	=> 'message',    // ID поля
 			'rows'		=> '5',
 			'cols'		=> '50',
-			'value'		=>	$this->input->post('message'),          		
+			'value'		=>	$message_data,          		
 			);
 		$to = array(
             'name'   	=> 'to',    // Имя поля
 			'id'       	=> 'to',    // ID поля
 			'maxlength'	=> '100',     // Максимальное кол-во знаков
 			'size'     	=> '40',      // Размер
-			'value'		=>	$this->input->post('to'),
+			'value'		=>	$to_data,
 			);		
 		$hidden = array(
-			'user_to'	=>	$this->input->post('user_to'),
+			'user_to'	=>	$user_to_data,
 			);
 		
 		$data['form_open'] = form_open('user/newMessage');

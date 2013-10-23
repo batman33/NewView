@@ -579,6 +579,22 @@ input[type=button]:active, input[type=submit]:active, .button:active {
     font-weight: 700;
     margin: 0 0 -6px 50px;    
 }
+.comment .list > ul li .user > a{
+    font-size: 14px;
+    font-weight: 700;
+    color: #4F5155;
+    text-decoration: none;
+}
+.comment .list > ul li .user > a:hover{text-decoration: underline;}
+.comment .list > ul li .user .sent-message{
+    display: inline-block;
+    background: url(../images/mail.png) center center no-repeat;
+    width: 16px;
+    height:16px;
+    margin: 4px 5px -4px;
+    opacity: 0.3;
+}
+.comment .list > ul li .user .sent-message:hover{opacity: 0.7;}
 .comment .list > ul li .date{
     font-size: 10px;
     height: 15px;

@@ -25,8 +25,8 @@ $(function(){
 			$("#user_to").val(ui.item.id);
 		}
 	}).data( "ui-autocomplete" )._renderItem = function( ul, item ) {
-      return $( "<li>" ) 
-       .append( "<a><img src='" + item.thumb + "'/><h3><b>" + item.label + "</b> " + item.name + "</h3></a>" )
+      return $("<li>") 
+       .append( "<a class='heighter'><img src='" + item.thumb + "'/><h3><b>" + item.label + "</b> " + item.name + "</h3></a>" )
        .appendTo( ul );
     };
 });

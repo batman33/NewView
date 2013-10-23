@@ -23,12 +23,10 @@ class Messages extends CI_Model {
 			messages.status as mess_status,
 			messages.created as mess_created,
 			users.name as u_name,
-			users.id as u_id');
-
-		$this->db->order_by('messages.id', 'desc');
-		
-		$this->db->where('to', $id);
-		$this->db->join('users', 'users.id = messages.from', 'left');
+			users.id as u_id')
+			     ->order_by('messages.id', 'desc')
+			     ->where('to', $id)
+			     ->join('users', 'users.id = messages.from', 'left');
 
         $query = $this->db->get($this->table);
         return $query->result();		
@@ -42,10 +40,10 @@ class Messages extends CI_Model {
 			messages.status as mess_status,
 			messages.created as mess_created,
 			users.name as u_name,
-			users.id as u_id');
-		
-		$this->db->where('from', $id);
-		$this->db->join('users', 'users.id = messages.to', 'left');
+			users.id as u_id')
+		         ->order_by('messages.id', 'desc')
+				 ->where('from', $id)
+		         ->join('users', 'users.id = messages.to', 'left');
 
         $query = $this->db->get($this->table);
         return $query->result();		
@@ -89,9 +87,9 @@ class Messages extends CI_Model {
 
 	public function countByUser($id)
 	{
-		$this->db->where('to', $id);
-		$this->db->where('status', '1');
-		$this->db->from($this->table); 
+		$this->db->where('to', $id)
+		         ->where('status', '1')
+		         ->from($this->table); 
 		$query = $this->db->get();
 		return $query->num_rows();
 	}
