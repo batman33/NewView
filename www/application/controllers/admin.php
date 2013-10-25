@@ -2,9 +2,13 @@
 
 class Admin extends CI_Controller {
 
-
+    // Путь загрузки полного изображения
     private $imageUploadPath = "files/img/big/";
+
+    // Путь загрузки маленького квадратного изображения
     private $thumbnailUploadPath = "files/img/thumb/";
+
+    // Путь загрузки очень маленького квадратного изображения
     private $thumbnailMinUploadPath = "files/img/thumb_small/";
 
 
@@ -14,15 +18,18 @@ class Admin extends CI_Controller {
         //Проверка на авторизованность
         if(!$this->session->userdata('username'))
             if($this->session->userdata('role') != 'admin')
-                redirect('/admin', 'refresh');
+                redirect('/admin', 'refresh'); // Если нет то Редирект обратно на логин в админку
         
     }
 
     /* Главная страница админ панели */
 	public function enter()
 	{
+        // Титул страницы
         $title['title'] = 'Добро пожаловать '.$this->session->userdata('username');
 
+
+        // Загрузка отображенией
         $this->load->view('admin/block/top',$title);
 		$this->load->view('admin/a_enter');
         $this->load->view('admin/block/menu');  
@@ -132,8 +139,7 @@ class Admin extends CI_Controller {
 			'id'          => 'name',    // ID поля
 			'maxlength'   => '500',     // Максимальное кол-во знаков
 			'size'        => '70',      // Размер
-			'value'		=>	$mem_name,
-                                        // Значение, для сохраненения при перезагрузке стр.
+			'value'		=>	$mem_name,  // Значение, для сохраненения при перезагрузке стр.
 			);
 		$text = array(
 			'name'        => 'text',
@@ -315,6 +321,7 @@ class Admin extends CI_Controller {
         $this->load->view('admin/block/menu');   
     }
     
+    /* Метод настройки приложения */
     public function options(){
         $title['title'] = 'Настройки';
         
@@ -323,8 +330,8 @@ class Admin extends CI_Controller {
         $this->load->view('admin/block/menu');    
     }
     
-    // Метод добавления удаления
-    // Редактирование категорий
+    /*  Метод добавления удаления
+        Редактирование категорий  */
     public function category(){
         $title['title'] = 'Категории';
         $this->load->model('category');        
@@ -393,9 +400,11 @@ class Admin extends CI_Controller {
         $this->category->delete($this->input->post('delete_id'));
     }
     
+    /* Вывод всех пользователей сайта 
+       с функционалом удаление бана
+       редактирования                 */
     public function users()
     {
-
         $title['title'] = 'Пользователи';
         
         // Загрузка модели пользователей
