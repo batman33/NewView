@@ -33,6 +33,8 @@ class Users extends CI_Model
     // return - Object -> array
 	public function getAll()
 	{
+		$this->db->select('users.id, users.login, users.password, users.role, users.name, users.email, users.skype, users.birthday, users.avatar_full, users.avatar_small, users.avatar_thums, city.id_region, city.id_country, city.oid, city.city_name_ru, city.city_name_en');
+		$this->db->join('city', 'city.id = users.city', 'left');
         $query = $this->db->get($this->table);
         return $query->result();
 	}

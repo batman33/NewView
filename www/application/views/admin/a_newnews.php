@@ -1,11 +1,12 @@
 <script type="text/javascript">
     $(function() {
         $('#date').datepicker();
-        $('select').selectbox();
-        $('.selectbox ul, .selectbox .dropdown').css('width', '100%');        
+        /*$('select').selectbox();
+        $('.selectbox ul, .selectbox .dropdown').css('width', '100%');     */   
     });   
 </script>
 <h2>Добавить новость</h2>
+<?=$category?>
 <?=$formopen?>
 <table>
     <tr>
@@ -21,7 +22,12 @@
     </tr>
     <tr>
         <td>Категория</td>
-        <td><?=$category?></td>
+        <td>
+            <?php is_array($category) ? '' : $category = explode(',', $category); 
+            foreach ($categorys as $key) {
+                echo '<label>' . form_checkbox('category[]', $key->id, (in_array($key->id, $category) ? true : false)) . $key->name . '</label><br />'; 
+            }?>
+        </td>
     </tr>
     <tr>
         <td>Мета описание</td>
@@ -45,6 +51,3 @@
 </table>
 <?php if(isset($hidden)) echo $hidden; ?>
 <?=$formclose?>
-
-
-<?=validation_errors('<div class="error">', '</div>');?>

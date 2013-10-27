@@ -40,4 +40,12 @@ class Category extends CI_Model
         $this->db->delete($this->table);        
     }
 
+    public function getNameByID($id)
+    {
+        $this->db->select('name');
+        $this->db->where('id', $id);
+        $query = $this->db->get($this->table);
+        $res = $query->row();
+        return $res->name;
+    }
 }

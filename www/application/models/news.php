@@ -11,9 +11,9 @@ class News extends CI_Model
 
 	public function getAll(){
         //$query = $this->db->get($this->table)->join('category', 'category.id = news.category', 'left');
-        $this->db->select('news.name AS `news_name` , news.img_small AS `thumbnail`, news.id AS `news_id` , news.date AS `news_date` , category.name AS `cat_name` , category.id AS `cat_id`');
-        $this->db->from($this->table);
-        $this->db->join('category', 'category.id = news.category', 'left');
+        $this->db->select('news.name AS `news_name` , news.img_small AS `thumbnail`, news.id AS `news_id` , news.date AS `news_date` , news.category AS `cat_name`')
+                 ->from($this->table)
+                 ->order_by('news.date', 'desc');
 
         $query = $this->db->get();     
 
@@ -22,9 +22,9 @@ class News extends CI_Model
 
     public function getAllPreview($num, $offset)
     {
-        $this->db->select('news.name AS `news_name` , news.id AS `news_id` , news.date AS `news_date` , news.text AS `news_text`,news.img_min AS `thumbnail`,category.name AS `cat_name` , category.id AS `cat_id`');
-        $this->db->join('category', 'category.id = news.category', 'left');
-        $this->db->order_by('news_id','desc');
+        $this->db->select('news.name AS `news_name` , news.id AS `news_id` , news.date AS `news_date` , news.text AS `news_text`,news.img_min AS `thumbnail`,category.name AS `cat_name` , category.id AS `cat_id`')
+                 ->join('category', 'category.id = news.category', 'left')
+                 ->order_by('news.date', 'desc');
 
         $query = $this->db->get($this->table,$num, $offset);     
 
@@ -79,10 +79,8 @@ class News extends CI_Model
                                 news.date as `date`,    
                                 news.img_min as `img_min`,     
                                 news.meta_desc as `meta_desc`,  
-                                news.meta_key as `meta_key`,          
-                                category.name as `category`, 
-                                category.id as `cat_id`');
-            $this->db->join('category', 'category.id = news.category', 'left');
+                                news.meta_key as `meta_key`,           
+                                news.category as `cat_id`');
             $this->db->where('news.id', $id);
             $this->db->from($this->table);       
             $query = $this->db->get();

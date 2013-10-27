@@ -1,4 +1,17 @@
-﻿
+﻿/******************************************************** GLOBAL STYLE  ***************/
+
+.sent-message{
+    display: inline-block;
+    background: url(../images/mail.png) center center no-repeat;
+    width: 16px;
+    height:16px;
+    margin: 0 6px -5px;
+    opacity: 0.5;
+}
+
+.sent-message:hover{opacity: 1;}
+
+/**************************************************************************************/
 ::selection{ background-color: #E13300; color: white; }
 ::moz-selection{ background-color: #E13300; color: white; }
 ::webkit-selection{ background-color: #E13300; color: white; }

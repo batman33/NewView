@@ -49,9 +49,34 @@ class Admin extends CI_Controller {
 	{
         // Загрузка модели новостей
 		$this->load->model('news');
+        $this->load->model('category');
         
         // Сбор всех новостей
 		$data['data'] = $this->news->getAll();
+
+        // Парсим категорию, из чисел в название
+        foreach ($data['data'] as $key){
+            
+            // Распарсим строку из id в Массив 
+            $cat_id = explode(',',$key->cat_name);
+            
+            // Обнуляем строку в данных
+            $key->cat_name = '';
+
+            // Заполнение строки названиями категорий
+            foreach ($cat_id as $value) {
+
+                // Получаем название с БД
+                $name = $this->category->getNameByID($value);
+
+                // Проверяем на последний элемент, если нет то ставим запятую
+                if($value == end($cat_id)) 
+                    $key->cat_name .= $name;
+                else 
+                    $key->cat_name .= $name . ', ';
+                
+            }
+        }
 
         // Титульник
         $title['title'] = 'Добро пожаловать '.$this->session->userdata('username');
@@ -90,7 +115,7 @@ class Admin extends CI_Controller {
             // Запись данных
             $mem_name       = $datas[0]->name;
             $mem_text       = $datas[0]->text;
-            $mem_category   = $datas[0]->category;
+            $mem_category   = $datas[0]->cat_id;
             $mem_date       = date("m/d/Y", $datas[0]->date);
             $mem_desc       = $datas[0]->meta_desc;
             $mem_key        = $datas[0]->meta_key;    
@@ -198,7 +223,8 @@ class Admin extends CI_Controller {
 		$form['text'] = form_textarea($text);
         $form['ckeditor'] = $textCK; // Поле CKField связанно с 'text'
         $form['date'] = form_input($date);
-        $form['category'] = form_dropdown('category', $this->category->getDropDownList(), $mem_category);        
+        $form['category'] = $mem_category;
+        $form['categorys'] = $this->category->getAll();    
         $form['meta_desc'] = form_textarea($meta_desc);
         $form['meta_key'] = form_textarea($meta_key);        
        	$form['img']  = form_upload($img);
@@ -210,7 +236,7 @@ class Admin extends CI_Controller {
         $this->form_validation->set_rules('text', 'Текст', 'required');
         $this->form_validation->set_rules('date', 'Дата', 'trim|required|xss_clean');
         $this->form_validation->set_rules('meta_desc', 'Мета описание', 'trim|required|xss_clean');
-        $this->form_validation->set_rules('category', 'Категория', 'trim|required|xss_clean');        
+        $this->form_validation->set_rules('category', 'Категория', 'required');        
         $this->form_validation->set_rules('meta_key', 'Мета ключи', 'trim|required|xss_clean');
         $this->form_validation->set_rules('img', 'Картинка', 'trim|xss_clean');                
         
@@ -296,11 +322,11 @@ class Admin extends CI_Controller {
             $data['name']      =  $this->input->post('name');
             $data['text']      =  $this->input->post('text');
             $data['date']      =  $second;
-            $data['category']  =  $this->input->post('category');
+            $data['category']  =  implode(",", $this->input->post('category'));
             $data['meta_desc'] =  $this->input->post('meta_desc');
             $data['meta_key']  =  $this->input->post('meta_key');
 
-
+            $form['cat_form'] = $this->input->post('category');
            
             // Новая запись или редактирование - проверка на существование скрытого поля
             if($this->input->post('newsID')){
