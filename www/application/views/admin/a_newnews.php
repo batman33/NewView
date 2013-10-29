@@ -6,7 +6,6 @@
     });   
 </script>
 <h2>Добавить новость</h2>
-<?=$category?>
 <?=$formopen?>
 <table>
     <tr>
@@ -23,10 +22,12 @@
     <tr>
         <td>Категория</td>
         <td>
-            <?php is_array($category) ? '' : $category = explode(',', $category); 
-            foreach ($categorys as $key) {
-                echo '<label>' . form_checkbox('category[]', $key->id, (in_array($key->id, $category) ? true : false)) . $key->name . '</label><br />'; 
-            }?>
+            <label><input type="checkbox" checked="checked" value="1" name="category[]">Новости</label><br />
+            <?php
+            foreach ($categorys as $key)
+                if($key->id != 1)
+                    echo '<label>' . form_checkbox('category[]', $key->id, (in_array($key->id, $category) ? true : false)) . $key->name . '</label><br />'; 
+            ?>
         </td>
     </tr>
     <tr>
@@ -51,3 +52,4 @@
 </table>
 <?php if(isset($hidden)) echo $hidden; ?>
 <?=$formclose?>
+
