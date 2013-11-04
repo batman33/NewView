@@ -54,6 +54,30 @@ class Admin extends CI_Controller {
         // Сбор всех новостей
 		$data['data'] = $this->news->getAll();
 
+        // Парсим категорию, из чисел в название
+        foreach ($data['data'] as $key){
+            
+            // Распарсим строку из id в Массив 
+            $cat_id = explode(',',$key->cat_name);
+            
+            // Обнуляем строку в данных
+            $key->cat_name = '';
+
+            // Заполнение строки названиями категорий
+            foreach ($cat_id as $value) {
+
+                // Получаем название с БД
+                $name = $this->category->getNameByID($value);
+
+                // Проверяем на последний элемент, если нет то ставим запятую
+                if($value == end($cat_id)) 
+                    $key->cat_name .= $name;
+                else 
+                    $key->cat_name .= $name . ', ';
+                
+            }
+        }
+
         // Титульник
         $title['title'] = 'Добро пожаловать '.$this->session->userdata('username');
         
@@ -86,22 +110,22 @@ class Admin extends CI_Controller {
             $datas = $this->news->getByIDForEdit($this->uri->segment(3));
 
             // Заголовок
-            $title['title'] = 'Изменение записи "' . $datas->name . '"';
+            $title['title'] = 'Изменение записи "' . $datas[0]->name . '"';
 
             // Запись данных
-            $mem_name       = $datas->name;
-            $mem_text       = $datas->text;
-            $mem_category   = $datas->cat_id;
-            $mem_date       = date("m/d/Y", $datas->date);
-            $mem_desc       = $datas->meta_desc;
-            $mem_key        = $datas->meta_key;    
+            $mem_name       = $datas[0]->name;
+            $mem_text       = $datas[0]->text;
+            $mem_category   = $datas[0]->cat_id;
+            $mem_date       = date("m/d/Y", $datas[0]->date);
+            $mem_desc       = $datas[0]->meta_desc;
+            $mem_key        = $datas[0]->meta_key;    
 
             // Скрытое поле с ID записи
             $hidden = array('newsID' => $this->uri->segment(3));
             $form['hidden'] = form_hidden($hidden);
 
             // URL Картинка
-            $form['img_src'] = $datas->img_min;    
+            $form['img_src'] = $datas[0]->img_min;    
 
             // Название кнопки
             $button_name = 'Изменить запись';
@@ -222,7 +246,7 @@ class Admin extends CI_Controller {
             // Перевод времени в формат UNIX
             list($month, $day, $year) = explode('/',$this->input->post('date')); 
 
-            $second = mktime(date('G'),date('i'),date('s'),$month,$day,$year);
+            $second = mktime('0',date('i'),date('G'),$month,$day,$year);
 
             // Загрузка картинки с поля IMG, и проверка на сущетсвование                      
             if($this->upload->do_upload('img')){
@@ -298,20 +322,19 @@ class Admin extends CI_Controller {
             $data['name']      =  $this->input->post('name');
             $data['text']      =  $this->input->post('text');
             $data['date']      =  $second;
+            $data['category']  =  implode(",", $this->input->post('category'));
             $data['meta_desc'] =  $this->input->post('meta_desc');
             $data['meta_key']  =  $this->input->post('meta_key');
 
+            $form['cat_form'] = $this->input->post('category');
+           
             // Новая запись или редактирование - проверка на существование скрытого поля
             if($this->input->post('newsID')){
                 // Редактирование
                 $this->news->updateNews($data, $this->input->post('newsID'));
-
-                $this->news->updateNewsCategory($this->input->post('category'), $this->input->post('newsID'));
             } else {
                 // Новая запись
-                $new_id = $this->news->newNews($data);
-
-                $this->news->updateNewsCategory($this->input->post('category'), $new_id);
+                $this->news->newNews($data);
             }
 
             // Редирект на страницу со всеми записями
