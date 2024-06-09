@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://newview.loc';
+$config['base_url']	= 'http://localhost';
 
 /*
 |--------------------------------------------------------------------------
@@ -69,7 +69,7 @@ $config['url_suffix'] = '';
 | than english.
 |
 */
-$config['language']	= 'russian';
+$config['language']	= 'en';
 
 /*
 |--------------------------------------------------------------------------
@@ -224,7 +224,7 @@ $config['cache_path'] = '';
 | MUST set an encryption key.  See the user guide for info.
 |
 */
-$config['encryption_key'] = 'newview';
+$config['encryption_key'] = 'Px0vUObFC9c3%!eH';
 
 /*
 |--------------------------------------------------------------------------
